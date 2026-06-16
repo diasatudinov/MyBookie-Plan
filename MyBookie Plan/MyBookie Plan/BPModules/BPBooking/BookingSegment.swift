@@ -1,3 +1,11 @@
+//
+//  BookingSegment.swift
+//  MyBookie Plan
+//
+//
+
+import SwiftUI
+
 // MARK: - Bookings
 
 enum BookingSegment {
@@ -27,7 +35,8 @@ struct BookingsView: View {
                 VStack(alignment: .leading, spacing: 20) {
                     HStack {
                         Text("My Bookings")
-                            .font(.largeTitle.bold())
+                            .font(.system(size: 24, weight: .bold))
+                            .foregroundColor(.white)
 
                         Spacer()
 
@@ -82,7 +91,6 @@ struct BookingsView: View {
             }
             .sheet(item: $selectedBooking) { booking in
                 BookingDetailsSheet(booking: booking)
-                    .presentationDetents([.medium, .large])
             }
         }
     }
@@ -103,7 +111,8 @@ struct BookingDetailsSheet: View {
 
             HStack {
                 Text("Booking Details")
-                    .font(.title2.bold())
+                    .font(.system(size: 20, weight: .bold))
+                    .foregroundColor(.white)
 
                 Spacer()
 
@@ -117,24 +126,27 @@ struct BookingDetailsSheet: View {
 
             VStack(alignment: .leading, spacing: 16) {
                 HStack {
-                    Text("\(booking.sport.icon) \(booking.sport.rawValue)")
-                        .font(.caption.bold())
+                    Text("\(booking.sport.rawValue)")
+                        .font(.system(size: 14, weight: .semibold))
                         .foregroundColor(AppTheme.orange)
-                        .padding(.horizontal, 10)
+                        .padding(.horizontal, 12)
                         .padding(.vertical, 6)
                         .background(AppTheme.orange.opacity(0.18))
-                        .clipShape(Capsule())
+                        .clipShape(RoundedRectangle(cornerRadius: 12))
 
                     Text(booking.tournament)
+                        .font(.system(size: 14, weight: .semibold))
                         .foregroundColor(.gray)
+                        .padding(.horizontal, 12)
+                        .padding(.vertical, 6)
 
                     Text(booking.status.rawValue)
-                        .font(.caption.bold())
+                        .font(.system(size: 14, weight: .semibold))
                         .foregroundColor(AppTheme.orange)
-                        .padding(.horizontal, 10)
+                        .padding(.horizontal, 12)
                         .padding(.vertical, 6)
                         .background(AppTheme.orange.opacity(0.18))
-                        .clipShape(Capsule())
+                        .clipShape(RoundedRectangle(cornerRadius: 12))
                 }
 
                 DetailLine(title: "Match", value: booking.title)
@@ -157,9 +169,14 @@ struct BookingDetailsSheet: View {
                         .font(.headline)
                         .frame(maxWidth: .infinity)
                         .padding()
-                        .background(AppTheme.green.opacity(0.25))
+                        .background(AppTheme.green.opacity(0.1))
                         .foregroundColor(AppTheme.green)
                         .clipShape(RoundedRectangle(cornerRadius: 14))
+                        .overlay {
+                            RoundedRectangle(cornerRadius: 14)
+                                .stroke(lineWidth: 1)
+                                .foregroundStyle(AppTheme.green.opacity(0.3))
+                        }
                 }
 
                 Button {
@@ -170,9 +187,14 @@ struct BookingDetailsSheet: View {
                         .font(.headline)
                         .frame(maxWidth: .infinity)
                         .padding()
-                        .background(AppTheme.red.opacity(0.25))
+                        .background(AppTheme.red.opacity(0.1))
                         .foregroundColor(AppTheme.red)
                         .clipShape(RoundedRectangle(cornerRadius: 14))
+                        .overlay {
+                            RoundedRectangle(cornerRadius: 14)
+                                .stroke(lineWidth: 1)
+                                .foregroundStyle(AppTheme.red.opacity(0.3))
+                        }
                 }
             }
 
@@ -199,11 +221,26 @@ struct CreateBookingView: View {
     var body: some View {
         ScrollView {
             VStack(alignment: .leading, spacing: 18) {
-                Text("Create Booking")
-                    .font(.largeTitle.bold())
+                
+                HStack {
+                    Text("Create Booking")
+                        .font(.system(size: 24, weight: .bold))
+                        .foregroundColor(.white)
 
+                    Spacer()
+
+                    Button {
+                        dismiss()
+                    } label: {
+                        Image(systemName: "xmark")
+                            .foregroundColor(.white)
+                    }
+                }
+
+                
                 DatePicker("Date & Time", selection: $date)
                     .datePickerStyle(.compact)
+                    .foregroundColor(.white)
                     .padding()
                     .background(AppTheme.card)
                     .clipShape(RoundedRectangle(cornerRadius: 14))
@@ -217,7 +254,8 @@ struct CreateBookingView: View {
 
                 VStack(alignment: .leading, spacing: 10) {
                     Text("Sport Selector")
-                        .font(.headline)
+                        .font(.system(size: 14, weight: .semibold))
+                        .foregroundStyle(.white)
 
                     LazyVGrid(columns: [.init(), .init()], spacing: 10) {
                         ForEach(Sport.allCases) { sport in
@@ -227,7 +265,7 @@ struct CreateBookingView: View {
                                 Text("\(sport.icon) \(sport.rawValue)")
                                     .font(.subheadline.bold())
                                     .frame(maxWidth: .infinity)
-                                    .padding()
+                                    .padding(.vertical, 16)
                                     .background(selectedSport == sport ? AppTheme.orange : AppTheme.card)
                                     .foregroundColor(.white)
                                     .clipShape(RoundedRectangle(cornerRadius: 14))
@@ -242,6 +280,10 @@ struct CreateBookingView: View {
                     icon: "person",
                     text: $teamOne
                 )
+                Text("VS")
+                    .font(.system(size: 16, weight: .bold))
+                    .foregroundStyle(.gray)
+                    .frame(maxWidth: .infinity)
 
                 AppTextField(
                     title: "Team 2 / Player 2",
@@ -272,6 +314,8 @@ struct CreateBookingView: View {
                         .foregroundColor(.white)
 
                     TextEditor(text: $note)
+                        .scrollContentBackground(.hidden)
+                        .foregroundColor(.white)
                         .frame(height: 120)
                         .padding(8)
                         .background(AppTheme.field)
@@ -313,4 +357,9 @@ struct CreateBookingView: View {
 
         dismiss()
     }
+}
+
+#Preview {
+    BookingsView()
+        .environmentObject(AppStore())
 }

@@ -1,3 +1,11 @@
+//
+//  SportsCalendarView.swift
+//  MyBookie Plan
+//
+//
+
+import SwiftUI
+
 // MARK: - Calendar
 
 struct SportsCalendarView: View {
@@ -17,7 +25,8 @@ struct SportsCalendarView: View {
             ScrollView {
                 VStack(alignment: .leading, spacing: 22) {
                     Text("Sports Calendar")
-                        .font(.largeTitle.bold())
+                        .font(.system(size: 24, weight: .bold))
+                        .foregroundColor(.white)
 
                     ScrollView(.horizontal, showsIndicators: false) {
                         HStack {
@@ -27,7 +36,7 @@ struct SportsCalendarView: View {
 
                             ForEach(Sport.allCases) { sport in
                                 FilterButton(
-                                    title: "\(sport.icon) \(sport.rawValue)",
+                                    title: "\(sport.rawValue)",
                                     isSelected: selectedSport == sport
                                 ) {
                                     selectedSport = sport
@@ -41,6 +50,7 @@ struct SportsCalendarView: View {
                     VStack(spacing: 14) {
                         ForEach(filteredEvents) { event in
                             Button {
+                                
                                 selectedEvent = event
                             } label: {
                                 SportsEventCardView(event: event)
@@ -51,10 +61,10 @@ struct SportsCalendarView: View {
                 .padding()
             }
             .background(AppTheme.background.ignoresSafeArea())
-            .sheet(item: $selectedEvent) { event in
-                EventDetailsSheet(event: event)
-                    .presentationDetents([.medium])
-            }
+//            .sheet(item: $selectedEvent) { event in
+//                EventDetailsSheet(event: event)
+//                    .presentationDetents([.medium])
+//            }
         }
     }
 }
@@ -65,18 +75,20 @@ struct WeekCalendarStripView: View {
     var body: some View {
         VStack(spacing: 16) {
             HStack {
-                Image(systemName: "chevron.left")
-                    .foregroundColor(.gray)
+                Spacer()
+
+                HStack {
+                    Image(systemName: "calendar")
+                        .font(.headline)
+                        .foregroundStyle(AppTheme.orange)
+                    
+                    Text(Date().monthYear)
+                        .font(.system(size: 16, weight: .semibold))
+                        .foregroundStyle(.white)
+                }
 
                 Spacer()
 
-                Label(Date().monthYear, systemImage: "calendar")
-                    .font(.headline)
-
-                Spacer()
-
-                Image(systemName: "chevron.right")
-                    .foregroundColor(.gray)
             }
 
             HStack {
@@ -90,6 +102,7 @@ struct WeekCalendarStripView: View {
 
                         Text(date.dayNumber)
                             .font(.headline)
+                            .foregroundColor(.white)
                             .frame(width: 42, height: 42)
                             .background(offset == 1 ? AppTheme.orange : Color.clear)
                             .clipShape(RoundedRectangle(cornerRadius: 12))
@@ -141,6 +154,7 @@ struct SportsEventCardView: View {
 
                 Text("Book Event")
                     .font(.subheadline.bold())
+                    .foregroundStyle(AppTheme.orange)
                     .padding(.horizontal, 16)
                     .padding(.vertical, 8)
                     .background(AppTheme.orange.opacity(0.22))
@@ -196,4 +210,9 @@ struct EventDetailsSheet: View {
         .padding()
         .background(AppTheme.background.ignoresSafeArea())
     }
+}
+
+#Preview {
+    SportsCalendarView()
+        .environmentObject(AppStore())
 }
