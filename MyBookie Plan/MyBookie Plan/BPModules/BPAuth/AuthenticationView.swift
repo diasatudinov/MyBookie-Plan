@@ -1,3 +1,11 @@
+//
+//  AuthenticationView.swift
+//  MyBookie Plan
+//
+//
+
+import SwiftUI
+
 // MARK: - Authentication
 
 struct AuthenticationView: View {
@@ -16,23 +24,25 @@ struct AuthenticationView: View {
 
                 HStack(spacing: 0) {
                     Text("My")
-                        .font(.largeTitle.bold())
+                        .font(.system(size: 48, weight: .bold))
                         .foregroundColor(.white)
 
                     Text("Bookie")
-                        .font(.largeTitle.bold())
+                        .font(.system(size: 48, weight: .bold))
                         .foregroundColor(AppTheme.orange)
                 }
 
                 VStack(spacing: 8) {
                     Text("Welcome back")
-                        .font(.title2.bold())
+                        .font(.system(size: 24, weight: .bold))
+                        .foregroundColor(.white)
 
-                    Text("Sign in to continue planning your sports strategy")
-                        .font(.subheadline)
+                    Text("Sign in to continue planning your sports\nstrategy")
+                        .font(.system(size: 16, weight: .regular))
                         .foregroundColor(AppTheme.textSecondary)
                         .multilineTextAlignment(.center)
                 }
+                .padding(.bottom, 6)
 
                 VStack(spacing: 18) {
                     AppTextField(
@@ -48,15 +58,33 @@ struct AuthenticationView: View {
                             .foregroundColor(.gray)
 
                         HStack {
-                            Image(systemName: "lock")
-                                .foregroundColor(.gray)
-
-                            if isPasswordVisible {
-                                TextField("Enter your password", text: $password)
-                            } else {
-                                SecureField("Enter your password", text: $password)
+                            ZStack {
+                                
+                                if isPasswordVisible {
+                                    TextField("", text: $password)
+                                        .foregroundColor(.white)
+                                } else {
+                                    SecureField("", text: $password)
+                                        .foregroundColor(.white)
+                                }
+                                
+                                if password.isEmpty {
+                                    HStack {
+                                        Image(systemName: "lock")
+                                            .resizable()
+                                            .scaledToFit()
+                                            .frame(height: 14)
+                                        
+                                        Text("Enter your password")
+                                            .font(.system(size: 16, weight: .regular))
+                                            .frame(maxWidth: .infinity, alignment: .leading)
+                                        
+                                    }
+                                    .foregroundColor(.white.opacity(0.5))
+                                    .allowsHitTesting(false)
+                                }
                             }
-
+                            
                             Button {
                                 isPasswordVisible.toggle()
                             } label: {
@@ -74,7 +102,7 @@ struct AuthenticationView: View {
                     store.signIn(login: login, password: password)
                 } label: {
                     Text("Sign In")
-                        .font(.headline)
+                        .font(.system(size: 16, weight: .semibold))
                         .frame(maxWidth: .infinity)
                         .padding()
                         .background(AppTheme.orange)
@@ -84,7 +112,7 @@ struct AuthenticationView: View {
                 .padding(.top, 30)
 
                 Text("18+ Virtual Planning Tool. Not a Gambling Product.")
-                    .font(.caption)
+                    .font(.system(size: 12, weight: .regular))
                     .foregroundColor(.gray)
 
                 Spacer()
@@ -92,4 +120,9 @@ struct AuthenticationView: View {
             .padding(24)
         }
     }
+}
+
+#Preview {
+    AuthenticationView()
+        .environmentObject(AppStore())
 }
