@@ -1,13 +1,19 @@
+//
+//  FBLoaderView.swift
+//  MyBookie Plan
+//
+//
+
 import SwiftUI
 
-struct FBLoaderView: View {
+struct BPLoaderView: View {
     @State private var scale: CGFloat = 1.0
     @State private var progress: CGFloat = 0.0
     @State private var timer: Timer?
     var body: some View {
         ZStack {
             ZStack {
-                Image("FBLoaderImage")
+                Image("loaderImageBP")
                     .resizable()
                     .ignoresSafeArea()
                     .scaledToFill()
@@ -18,7 +24,7 @@ struct FBLoaderView: View {
             
             VStack(spacing: 0) {
                 
-                Image("FBLoaderImage")
+                Image("loaderImageBP")
                     .resizable()
                     .scaledToFit()
                     .frame(height: 200)
@@ -76,5 +82,5 @@ struct FBLoaderView: View {
 
 
 #Preview {
-    FBLoaderView()
+    BPLoaderView()
 }

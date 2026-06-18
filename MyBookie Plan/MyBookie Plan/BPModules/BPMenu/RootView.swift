@@ -1,7 +1,11 @@
-#Preview {
-    RootView()
-        .environmentObject(AppStore())
-}
+//
+//  RootView.swift
+//  MyBookie Plan
+//
+//
+
+import SwiftUI
+
 // MARK: - Root
 
 struct RootView: View {
@@ -14,4 +18,9 @@ struct RootView: View {
             AuthenticationView()
         }
     }
+}
+
+#Preview {
+    RootView()
+        .environmentObject(AppStore())
 }

@@ -1,3 +1,11 @@
+//
+//  ProfileView.swift
+//  MyBookie Plan
+//
+//
+
+import SwiftUI
+
 // MARK: - Profile
 
 struct ProfileView: View {
@@ -8,7 +16,8 @@ struct ProfileView: View {
             ScrollView {
                 VStack(alignment: .leading, spacing: 22) {
                     Text("Profile")
-                        .font(.largeTitle.bold())
+                        .font(.system(size: 24, weight: .bold))
+                        .foregroundColor(.white)
 
                     HStack(spacing: 16) {
                         Image(systemName: "person")
@@ -16,16 +25,19 @@ struct ProfileView: View {
                             .padding()
                             .background(.white.opacity(0.16))
                             .clipShape(Circle())
-
+                            .foregroundColor(.white)
+                        
                         VStack(alignment: .leading, spacing: 4) {
                             Text(store.profile.fullName)
                                 .font(.title2.bold())
-
+                                .foregroundColor(.white)
+                            
                             Text("@\(store.profile.username)")
                                 .foregroundColor(.white.opacity(0.8))
 
                             Text("Pro Member")
                                 .font(.caption.bold())
+                                .foregroundColor(.white)
                                 .padding(.horizontal, 10)
                                 .padding(.vertical, 5)
                                 .background(.white.opacity(0.16))
@@ -137,7 +149,8 @@ struct ProfileStatView: View {
         VStack(spacing: 6) {
             Text(value)
                 .font(.title2.bold())
-
+                .foregroundColor(.white)
+            
             Text(title)
                 .font(.caption)
                 .foregroundColor(.gray)
@@ -160,7 +173,8 @@ struct PersonalInformationView: View {
         VStack(alignment: .leading, spacing: 24) {
             Text("Personal Information")
                 .font(.largeTitle.bold())
-
+                .foregroundColor(.white)
+            
             VStack(spacing: 12) {
                 Image(systemName: "person")
                     .font(.largeTitle)
@@ -212,8 +226,10 @@ struct EmailSettingsView: View {
         VStack(alignment: .leading, spacing: 24) {
             Text("Email Settings")
                 .font(.largeTitle.bold())
-
+                .foregroundColor(.white)
+            
             Text("Important: Changing your email will require verification. A confirmation link will be sent to your new email address.")
+                .foregroundColor(.white)
                 .padding()
                 .background(AppTheme.orange.opacity(0.14))
                 .clipShape(RoundedRectangle(cornerRadius: 14))
@@ -261,8 +277,10 @@ struct PasswordSecurityView: View {
         VStack(alignment: .leading, spacing: 24) {
             Text("Password & Security")
                 .font(.largeTitle.bold())
-
+                .foregroundColor(.white)
+            
             Text("Security tip: Use a strong password with at least 8 characters, including uppercase, lowercase, numbers, and special characters.")
+                .foregroundColor(.white)
                 .padding()
                 .background(AppTheme.orange.opacity(0.14))
                 .clipShape(RoundedRectangle(cornerRadius: 14))
@@ -320,7 +338,8 @@ struct BankrollSettingsView: View {
         VStack(alignment: .leading, spacing: 24) {
             Text("Bankroll Settings")
                 .font(.largeTitle.bold())
-
+                .foregroundColor(.white)
+            
             AppStaticField(
                 title: "Current Starting Bankroll",
                 value: store.profile.startingBankroll.money,
@@ -354,4 +373,9 @@ struct BankrollSettingsView: View {
         .padding()
         .background(AppTheme.background.ignoresSafeArea())
     }
+}
+
+#Preview {
+    ProfileView()
+        .environmentObject(AppStore())
 }
