@@ -1,6 +1,5 @@
 //
 //  Aplication + ext.swift
-//  Fortune Path East
 //
 //
 

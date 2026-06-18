@@ -15,6 +15,8 @@ struct AuthenticationView: View {
     @State private var password = ""
     @State private var isPasswordVisible = false
 
+    @State private var errorText = ""
+    
     var body: some View {
         ZStack {
             AppTheme.background.ignoresSafeArea()
@@ -98,8 +100,24 @@ struct AuthenticationView: View {
                     }
                 }
 
+                if !errorText.isEmpty {
+                    Text(errorText)
+                        .font(.caption)
+                        .foregroundColor(AppTheme.red)
+                        .frame(maxWidth: .infinity, alignment: .leading)
+                } else {
+                    Text(errorText)
+                        .font(.caption)
+                        .foregroundColor(.clear)
+                        .frame(maxWidth: .infinity, alignment: .leading)
+                }
+
                 Button {
-                    store.signIn(login: login, password: password)
+                    let success = store.signIn(login: login, password: password)
+
+                    if !success {
+                        errorText = "Invalid demo login or password"
+                    }
                 } label: {
                     Text("Sign In")
                         .font(.system(size: 16, weight: .semibold))
@@ -109,8 +127,7 @@ struct AuthenticationView: View {
                         .foregroundColor(.white)
                         .clipShape(RoundedRectangle(cornerRadius: 14))
                 }
-                .padding(.top, 30)
-
+                   
                 Text("18+ Virtual Planning Tool. Not a Gambling Product.")
                     .font(.system(size: 12, weight: .regular))
                     .foregroundColor(.gray)
